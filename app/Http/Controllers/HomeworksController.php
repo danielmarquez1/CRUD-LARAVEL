@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Homework;
 
@@ -26,6 +27,7 @@ class HomeworksController extends Controller
         //Insercion hacia la base de datos
         $homework = new Homework;
         $homework->title = $request->title; //Request->title es lo que obtiene del formulario
+        $homework->category_id = $request->category_id;
         $homework->save(); //Guardamos los datos hacia la base de datos.
         return redirect()->route('addtask')->with('success' , 'Tarea craada correctamente');
         //Debemos crear la ruta en web una vez terminado. para ver la accion
@@ -34,14 +36,15 @@ class HomeworksController extends Controller
 
      //MOSTRAR TODO LA INFORMACION
      public function index(){
-        $homeworks = Homework::all(); //ALL Muestra toda la informacion de la base de datso
+        $homeworks = Homework::all(); //ALL Muestra toda la informacion de la base de data
+        $categories = Category::all();
         //Retorna a la vista toda la informacion y lo almacena en una arreglo.
-        return view('layout.index' ,  ['homeworks' => $homeworks]);
+        return view('layout.index' ,  ['homeworks' => $homeworks , 'categories' => $categories]);
     }
 
     //MOSTRAR UNA INFORMACION EN ESPECIFICO
     public function show($id){
-        $homework = Homework::find(1); //Find busca en la tabla el campo especifico.
+        $homework = Homework::find($id); //Find busca en la tabla el campo especifico.
         return view('layout.show' ,  ['homework' => $homework]);
     }
 

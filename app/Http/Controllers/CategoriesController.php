@@ -6,6 +6,8 @@ use App\Models\Category;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\each;
+
 class CategoriesController extends Controller
 {
     /**
@@ -97,6 +99,12 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+       
+        //Eliminar todo las tareas de esa categorias
+        $category->homework()->each(function($homework){
+            $homework->delete();
+        });
+
         $category->delete();
         return redirect()->route('categories.index')->with('success' , 'Categoria eliminado correctamente');
     }

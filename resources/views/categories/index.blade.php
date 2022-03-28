@@ -19,6 +19,7 @@
             <label for="title" class="form-label">Titulo de la categoria</label>
             <input type="text" name="name" class="form-control">
         </div>
+        
 
         <div class="mb-3">
             <label for="color" class="form-label">Titulo de la categoria</label>
@@ -27,7 +28,7 @@
 
         <button type="submit" class="btn btn-primary">Crear nueva categoria </button>
     </form>
-
+           
     <div>
         @foreach ($categories as $category)
         <div class="row py-1">
